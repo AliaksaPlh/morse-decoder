@@ -41,20 +41,20 @@ function decode(expr) {
     let letterInBinary;
     let letterInMorse;
     let decodedLetters = '';
-    for(let i = 0; i < expr.length; i += 10) {
-        if (expr[i] === '*') {
-            decodedLetters = decodedLetters + ' ';
-        } else {
-            letterInBinary = `${+expr.slice(i, i + 10)}`;
-            letterInMorse = '';
-            for (let iPair = 0; iPair < letterInBinary.length; iPair += 2) {
-                if (letterInBinary.slice(iPair, iPair + 2) === '11') {
+    for(let i = 0; i < expr.length; i += 10) { // разделила на символы
+        if (expr[i] === '*') { // вычисляю пробел ли
+            decodedLetters = decodedLetters + ' '; // вывожу морз код символу - конечный результат в фазе главного цикла
+        } else { // если не пробел
+            letterInBinary = `${+expr.slice(i, i + 10)}`; // в строку без нулей
+            letterInMorse = ''; 
+            for (let iPair = 0; iPair < letterInBinary.length; iPair += 2) { // цикл для выведения морза кода
+                if (letterInBinary.slice(iPair, iPair + 2) === '11') { // для dash
                     letterInMorse = letterInMorse + '-';
-                } else if (letterInBinary.slice(iPair, iPair + 2) === '10') {
+                } else if (letterInBinary.slice(iPair, iPair + 2) === '10') { // для Point
                     letterInMorse = letterInMorse + '.';
                 }
             }
-            decodedLetters = decodedLetters + MORSE_TABLE[letterInMorse];
+            decodedLetters = decodedLetters + MORSE_TABLE[letterInMorse]; // вывожу морз код символу - конечный результат в фазе главного цикла
         }
     }
     return decodedLetters;
